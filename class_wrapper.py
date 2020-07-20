@@ -77,7 +77,7 @@ class Network(object):
         print(model)
         return model
 
-    def make_loss(self, logit=None, labels=None, G=None):
+    def make_loss(self, logit=None, labels=None, G=None, W=False):
         """
         Create a tensor that represents the loss. This is consistant both at training time \
         and inference time for Backward model
@@ -89,6 +89,10 @@ class Network(object):
             return None
         #if self.flags.data_set != 'gaussian_mixture':
         MSE_loss = nn.functional.mse_loss(logit, labels)          # The MSE Loss
+        if W:
+            weight = torch.zeros(logit.shape, requires_grad=False, device='cuda', dtype=torch.float)
+            weight[:, 0:1000] = 1
+            MSE_loss = torch.mean(weight * ((logit - labels) ** 2))
         BDY_loss = 0
         if G is not None:
             if self.flags.data_set != 'ballistics':                 # For non-ballisitcs dataset
@@ -344,7 +348,7 @@ class Network(object):
                 np.savetxt('geometry_initialization.csv',geometry_eval_input.cpu().data.numpy())
             self.optm_eval.zero_grad()                                  # Zero the gradient first
             logit = self.model(geometry_eval_input)                     # Get the output
-            loss = self.make_loss(logit, target_spectra_expand, G=geometry_eval_input)         # Get the loss
+            loss = self.make_loss(logit, target_spectra_expand, G=geometry_eval_input, W=True)         # Get the loss
             loss.backward()                                             # Calculate the Gradient
 
             if save_misc:

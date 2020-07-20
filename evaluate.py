@@ -45,9 +45,11 @@ def evaluate_from_model(model_dir, multi_flag=False, eval_data_all=False, save_m
     elif flags.data_set == 'robotic_arm':
         flags.test_ratio = 0.1                          # 10000 in total
     else:
-        flags.test_ratio = 0.00025                         # 20000 in total for Meta material
+        #flags.test_ratio = 0.0051062
+        flags.test_ratio = 0
+        #flags.test_ratio = 0.00025                        # 20000 in total for Meta material
     flags.batch_size = 1                            # For backprop eval mode, batchsize is always 1
-    flags.lr = 0.01
+    flags.lr = 1e-2
     if flags.data_set == 'ballistics':
         flags.lr = 1
     flags.eval_batch_size = eval_flags.eval_batch_size
