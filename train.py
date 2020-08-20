@@ -59,6 +59,7 @@ def retrain_different_dataset():
 if __name__ == '__main__':
     # Read the parameters to be set
     flags = flag_reader.read_flag()
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
     # Call the train from flag function
     training_from_flag(flags)

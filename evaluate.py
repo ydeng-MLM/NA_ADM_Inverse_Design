@@ -45,9 +45,9 @@ def evaluate_from_model(model_dir, multi_flag=False, eval_data_all=False, save_m
     elif flags.data_set == 'robotic_arm':
         flags.test_ratio = 0.1                          # 10000 in total
     else:
-        #flags.test_ratio = 0.0051062
-        flags.test_ratio = 0
-        #flags.test_ratio = 0.00025                        # 20000 in total for Meta material
+        #flags.test_ratio = 0.0051062/2
+        #flags.test_ratio = 0
+        flags.test_ratio = 0.0025                        # 20000 in total for Meta material
     flags.batch_size = 1                            # For backprop eval mode, batchsize is always 1
     flags.lr = 1e-2
     if flags.data_set == 'ballistics':
@@ -122,8 +122,8 @@ if __name__ == '__main__':
 
     #evaluate_from_model(eval_flags.eval_model)
     #evaluate_all(models_dir="models/")
-    
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     
     # Eval META_MATERIAL
-    evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=False, save_Simulator_Ypred=False, MSE_Simulator=False)
+    evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=True, save_Simulator_Ypred=False, MSE_Simulator=False)
 

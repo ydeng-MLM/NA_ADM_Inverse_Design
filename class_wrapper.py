@@ -91,7 +91,7 @@ class Network(object):
         MSE_loss = nn.functional.mse_loss(logit, labels)          # The MSE Loss
         if W:
             weight = torch.zeros(logit.shape, requires_grad=False, device='cuda', dtype=torch.float)
-            weight[:, 0:1000] = 1
+            weight[:, 0:875] = 1
             MSE_loss = torch.mean(weight * ((logit - labels) ** 2))
         BDY_loss = 0
         if G is not None:
@@ -348,7 +348,7 @@ class Network(object):
                 np.savetxt('geometry_initialization.csv',geometry_eval_input.cpu().data.numpy())
             self.optm_eval.zero_grad()                                  # Zero the gradient first
             logit = self.model(geometry_eval_input)                     # Get the output
-            loss = self.make_loss(logit, target_spectra_expand, G=geometry_eval_input, W=True)         # Get the loss
+            loss = self.make_loss(logit, target_spectra_expand, G=geometry_eval_input, W=False)         # Get the loss
             loss.backward()                                             # Calculate the Gradient
 
             if save_misc:
@@ -359,7 +359,7 @@ class Network(object):
                 if len(np.shape(Ypred)) == 1:                           # If this is the ballistics dataset where it only has 1d y'
                     Ypred = np.reshape(Ypred, [-1, 1])
                 # Get the MSE list of these
-                MSE_list = np.mean(np.square(Ypred - target_spectra_expand.cpu().data.numpy()), axis=1)
+                MSE_list = np.mean(np.square(Ypred[:, :875] - target_spectra_expand.cpu().data.numpy()[:, :875]), axis=1)
                 # Get the best and the index of it
                 best_MSE_in_batch = np.min(MSE_list)
                 avg_MSE_in_batch = np.mean(MSE_list)
@@ -435,6 +435,8 @@ class Network(object):
             else:                       # This is meta-meterial dataset, handle with special
                 with open(Xpred_file, 'a') as fxp:
                     np.savetxt(fxp, geometry_eval_input.cpu().data.numpy()[good_index, :])
+                with open(Ypred_file, 'a') as fyp:
+                    np.savetxt(fyp, logit.cpu().data.numpy()[good_index, :])
                 
        
         #############################
@@ -450,7 +452,7 @@ class Network(object):
             Ypred = np.reshape(Ypred, [-1, 1])
         
         # calculate the MSE list and get the best one
-        MSE_list = np.mean(np.square(Ypred - target_spectra_expand.cpu().data.numpy()), axis=1)
+        MSE_list = np.mean(np.square(Ypred[:, :875] - target_spectra_expand.cpu().data.numpy()[:, :875]), axis=1)
         best_estimate_index = np.argmin(MSE_list)
         Xpred_best = np.reshape(np.copy(geometry_eval_input.cpu().data.numpy()[best_estimate_index, :]), [1, -1])
         if save_Simulator_Ypred:

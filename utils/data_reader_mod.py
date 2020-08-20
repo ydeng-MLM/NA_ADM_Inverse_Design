@@ -22,9 +22,9 @@ def importData(directory, x_range, y_range):
     lbl = []
     for file_name in train_data_files:
         # import full arrays
-        ftr_array = pd.read_csv(os.path.join(directory, file_name), delimiter=' ',
+        ftr_array = pd.read_csv(os.path.join(directory, file_name), delimiter=',',
                                 header=None, usecols=x_range)
-        lbl_array = pd.read_csv(os.path.join(directory, file_name), delimiter=' ',
+        lbl_array = pd.read_csv(os.path.join(directory, file_name), delimiter=',',
                                 header=None, usecols=y_range)
         # append each data point to ftr and lbl
         for params, curve in zip(ftr_array.values, lbl_array.values):
@@ -186,10 +186,11 @@ def read_data_meta_material( x_range, y_range, geoboundary,  batch_size=128,
     :param train_valid_tuple: if it's not none, it will be the names of train and valid files
     :return: feature and label read from csv files, one line each time
     """
-    dataset = MetaMaterialUpdatedDataSet(x_range, y_range, geoboundary, data_dir, normalize_input)
+    dataset = MetaMaterialDataSet(x_range, y_range, geoboundary)
     test_len = int(test_ratio*len(dataset))
     train_len = len(dataset)-test_len
     train_set, test_set = torch.utils.data.random_split(dataset, [train_len, test_len])
+    train_set = permutate_periodicity(train_set)
     print("Length of training set is: "+str(len(train_set)))
     print("Length of test set is: "+str(len(test_set)))
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, num_workers=5)
@@ -498,3 +499,35 @@ class MetaMaterialUpdatedDataSet(Dataset):
         ftr = ftr_array.iloc[il]
         ftr = np.array(ftr, dtype='float32')
         return ftr
+
+def permutate_periodicity(geometry_in, spectra_in):
+    """
+    :param: geometry_in: numpy array of geometry [n x 14] dim
+    :param: spectra_in: spectra of the geometry_in [n x k] dim
+    :return: output of the augmented geometry, spectra [4n x 14], [4n x k]
+    """
+    # Get the dimension parameters
+    (n, k) = np.shape(spectra_in)
+    # Initialize the output
+    spectra_out = np.zeros([4 * n, k])
+    geometry_out = np.zeros([4 * n, 14])
+
+    #################################################
+    # start permutation of geometry (case: 1 - 0123)#
+    #################################################
+    # case:2 -- 1032
+    geometry_c2 = geometry_in[:, [0, 1, 3, 2, 5, 4, 7, 6, 9, 8, 11, 10, 13, 12]]
+    # case:3 -- 2301
+    geometry_c3 = geometry_in[:, [0, 1, 4, 5, 2, 3, 8, 9, 6, 7, 12, 13, 10, 11]]
+    # case:4 -- 3210
+    geometry_c4 = geometry_in[:, [0, 1, 5, 4, 3, 2, 9, 8, 7, 6, 13, 12, 11, 10]]
+
+    geometry_out[0 * n:1 * n, :] = geometry_in
+    geometry_out[1 * n:2 * n, :] = geometry_c2
+    geometry_out[2 * n:3 * n, :] = geometry_c3
+    geometry_out[3 * n:4 * n, :] = geometry_c4
+    print(n)
+
+    for i in range(4):
+        spectra_out[i * n:(i + 1) * n, :] = spectra_in
+    return geometry_out.astype('float32'), spectra_out.astype('float32')
