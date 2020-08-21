@@ -20,11 +20,11 @@ CONV_STRIDE = [2, 2, 1, 1]
 
 # Optimizer Params
 OPTIM = "Adam"
-REG_SCALE = 5e-5
+REG_SCALE = 1e-3
 BATCH_SIZE = 1024
 EVAL_BATCH_SIZE = 1000
 EVAL_STEP = 20
-TRAIN_STEP = 500
+TRAIN_STEP = 300
 BACKPROP_STEP = 300
 LEARN_RATE = 1e-4
 # DECAY_STEP = 25000 # This is for step decay, however we are using dynamic decaying
@@ -37,7 +37,7 @@ Y_RANGE = [i for i in range(16, 2017)]                       # Real Meta-materia
 #Y_RANGE = [i for i in range(10 , 310 )]                         # Artificial Meta-material dataset
 FORCE_RUN = True
 MODEL_NAME = None
-DATA_DIR = 'D:/Yang_MM_Absorber_ML/Backprop/'                                               # All simulated simple dataset
+DATA_DIR = 'D:/Duke/MM_MM_Project/14_parameter'                                               # All simulated simple dataset
 #DATA_DIR = '/work/sr365/'                                      # real Meta-material dataset
 #DATA_DIR = '/work/sr365/NN_based_MM_data/'                      # Artificial Meta-material dataset
 # DATA_DIR = '/home/omar/PycharmProjects/github/idlm_Pytorch-master/forward/'

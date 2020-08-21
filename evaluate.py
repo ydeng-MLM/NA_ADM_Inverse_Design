@@ -69,7 +69,7 @@ def evaluate_from_model(model_dir, multi_flag=False, eval_data_all=False, save_m
     # Evaluation process
     print("Start eval now:")
     if multi_flag:
-        pred_file, truth_file = ntwk.evaluate(save_dir='D:/Yang_MM_Absorber_ML/NA/' + flags.data_set, save_all=True,
+        pred_file, truth_file = ntwk.evaluate(save_dir='D:/Duke/MM_MM_Project/14_parameter' + flags.data_set, save_all=True,
                                                 save_misc=save_misc, MSE_Simulator=MSE_Simulator,save_Simulator_Ypred=save_Simulator_Ypred)
     else:
         pred_file, truth_file = ntwk.evaluate(save_misc=save_misc, MSE_Simulator=MSE_Simulator, save_Simulator_Ypred=save_Simulator_Ypred)
@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
     #evaluate_from_model(eval_flags.eval_model)
     #evaluate_all(models_dir="models/")
-    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     
     # Eval META_MATERIAL
     evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=True, save_Simulator_Ypred=False, MSE_Simulator=False)
