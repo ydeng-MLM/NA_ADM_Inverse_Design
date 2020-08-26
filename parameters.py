@@ -12,7 +12,7 @@ TEST_RATIO = 0.2
 
 # Model Architectural Params for meta_material data Set
 USE_LORENTZ = False
-LINEAR = [14, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 500]
+LINEAR = [14, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 500]
 CONV_OUT_CHANNEL = [4, 4, 4, 4]
 CONV_KERNEL_SIZE = [8, 8, 5, 5]
 CONV_STRIDE = [2, 2, 1, 1]
@@ -20,9 +20,9 @@ CONV_STRIDE = [2, 2, 1, 1]
 
 # Optimizer Params
 OPTIM = "Adam"
-REG_SCALE = 1e-3
+REG_SCALE = 1e-4
 BATCH_SIZE = 1024
-EVAL_BATCH_SIZE = 1000
+EVAL_BATCH_SIZE = 16000
 EVAL_STEP = 20
 TRAIN_STEP = 300
 BACKPROP_STEP = 300
@@ -48,7 +48,7 @@ NORMALIZE_INPUT = True
 USE_CPU_ONLY = False
 #EVAL_MODEL = "sine_wavereg2e-05trail_0_forward_swipe9"
 #EVAL_MODEL = "geo_test_30k_w_extra_h"
-EVAL_MODEL = "best_8e-5"
+EVAL_MODEL = "20200825_223756"
 #EVAL_MODEL = "robotic_armreg0.0005trail_0_backward_complexity_swipe_layer500_num6"
 #EVAL_MODEL = "ballisticsreg0.0005trail_0_complexity_swipe_layer500_num5"
 #EVAL_MODEL = "meta_materialreg2e-05trail_0_forward_swipe6"

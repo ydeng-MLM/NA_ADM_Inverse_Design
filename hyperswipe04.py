@@ -10,7 +10,7 @@ if __name__ == '__main__':
     #linear_unit_list = [1000]
     #linear_unit_list = [1000, 500, 300, 150]
     #reg_scale_list = [3e-5, 4e-5, 5e-5]
-    reg_scale_list = [2e-5]
+    #reg_scale_list = [2e-5]
     #reg_scale_list = [5e-4]
     for linear_unit in linear_unit_list:
         # Setting the loop for setting the parameter

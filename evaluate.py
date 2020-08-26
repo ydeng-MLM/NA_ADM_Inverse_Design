@@ -46,8 +46,8 @@ def evaluate_from_model(model_dir, multi_flag=False, eval_data_all=False, save_m
         flags.test_ratio = 0.1                          # 10000 in total
     else:
         #flags.test_ratio = 0.0051062/2
-        #flags.test_ratio = 0
-        flags.test_ratio = 0.0025                        # 20000 in total for Meta material
+        flags.test_ratio = 0
+        #flags.test_ratio = 0.0025                        # 20000 in total for Meta material
     flags.batch_size = 1                            # For backprop eval mode, batchsize is always 1
     flags.lr = 1e-2
     if flags.data_set == 'ballistics':
@@ -69,7 +69,7 @@ def evaluate_from_model(model_dir, multi_flag=False, eval_data_all=False, save_m
     # Evaluation process
     print("Start eval now:")
     if multi_flag:
-        pred_file, truth_file = ntwk.evaluate(save_dir='D:/Duke/MM_MM_Project/14_parameter' + flags.data_set, save_all=True,
+        pred_file, truth_file = ntwk.evaluate(save_dir='D:/Duke/MM_MM_Project/14_parameter/NA/' + flags.data_set, save_all=True,
                                                 save_misc=save_misc, MSE_Simulator=MSE_Simulator,save_Simulator_Ypred=save_Simulator_Ypred)
     else:
         pred_file, truth_file = ntwk.evaluate(save_misc=save_misc, MSE_Simulator=MSE_Simulator, save_Simulator_Ypred=save_Simulator_Ypred)
