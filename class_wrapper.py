@@ -348,7 +348,7 @@ class Network(object):
                 np.savetxt('geometry_initialization.csv',geometry_eval_input.cpu().data.numpy())
             self.optm_eval.zero_grad()                                  # Zero the gradient first
             logit = self.model(geometry_eval_input)                     # Get the output
-            loss = self.make_loss(logit, target_spectra_expand, G=geometry_eval_input, W=False)         # Get the loss
+            loss = self.make_loss(logit, target_spectra_expand, G=geometry_eval_input, W=True)         # Get the loss
             loss.backward()                                             # Calculate the Gradient
 
             if save_misc:
@@ -405,7 +405,7 @@ class Network(object):
             #######################################################
             # Choose the top 1,000 points from Backprop solutions #
             #######################################################
-            mse_loss = np.reshape(np.sum(np.square(logit.cpu().data.numpy() - target_spectra_expand.cpu().data.numpy()), axis=1), [-1, 1])
+            mse_loss = np.reshape(np.sum(np.square(logit.cpu().data.numpy()[:, :875] - target_spectra_expand.cpu().data.numpy()[:, :875]), axis=1), [-1, 1])
             #print("shape of mse_loss", np.shape(mse_loss))
             mse_loss = np.concatenate((mse_loss, np.reshape(np.arange(self.flags.eval_batch_size), [-1, 1])), axis=1)
             #print("shape of mse_loss", np.shape(mse_loss))

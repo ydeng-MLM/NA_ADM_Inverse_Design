@@ -12,7 +12,7 @@ TEST_RATIO = 0.2
 
 # Model Architectural Params for meta_material data Set
 USE_LORENTZ = False
-LINEAR = [14, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 500]
+LINEAR = [14, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 500]
 CONV_OUT_CHANNEL = [4, 4, 4, 4]
 CONV_KERNEL_SIZE = [8, 8, 5, 5]
 CONV_STRIDE = [2, 2, 1, 1]
@@ -20,11 +20,11 @@ CONV_STRIDE = [2, 2, 1, 1]
 
 # Optimizer Params
 OPTIM = "Adam"
-REG_SCALE = 5e-5
+REG_SCALE = 1e-4
 BATCH_SIZE = 1024
-EVAL_BATCH_SIZE = 1000
+EVAL_BATCH_SIZE = 16000
 EVAL_STEP = 20
-TRAIN_STEP = 500
+TRAIN_STEP = 300
 BACKPROP_STEP = 300
 LEARN_RATE = 1e-4
 # DECAY_STEP = 25000 # This is for step decay, however we are using dynamic decaying
@@ -37,7 +37,7 @@ Y_RANGE = [i for i in range(16, 2017)]                       # Real Meta-materia
 #Y_RANGE = [i for i in range(10 , 310 )]                         # Artificial Meta-material dataset
 FORCE_RUN = True
 MODEL_NAME = None
-DATA_DIR = 'D:/Yang_MM_Absorber_ML/Backprop/'                                               # All simulated simple dataset
+DATA_DIR = 'D:/Duke/MM_MM_Project/14_parameter'                                               # All simulated simple dataset
 #DATA_DIR = '/work/sr365/'                                      # real Meta-material dataset
 #DATA_DIR = '/work/sr365/NN_based_MM_data/'                      # Artificial Meta-material dataset
 # DATA_DIR = '/home/omar/PycharmProjects/github/idlm_Pytorch-master/forward/'
@@ -48,7 +48,7 @@ NORMALIZE_INPUT = True
 USE_CPU_ONLY = False
 #EVAL_MODEL = "sine_wavereg2e-05trail_0_forward_swipe9"
 #EVAL_MODEL = "geo_test_30k_w_extra_h"
-EVAL_MODEL = "best_8e-5"
+EVAL_MODEL = "20200825_223756"
 #EVAL_MODEL = "robotic_armreg0.0005trail_0_backward_complexity_swipe_layer500_num6"
 #EVAL_MODEL = "ballisticsreg0.0005trail_0_complexity_swipe_layer500_num5"
 #EVAL_MODEL = "meta_materialreg2e-05trail_0_forward_swipe6"
