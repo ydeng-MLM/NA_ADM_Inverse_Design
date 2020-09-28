@@ -24,9 +24,11 @@ class Backprop(nn.Module):
         # Linear Layer and Batch_norm Layer definitions here
         self.linears = nn.ModuleList([])
         self.bn_linears = nn.ModuleList([])
+        #self.drop = nn.Dropout(p=0.05)
         for ind, fc_num in enumerate(flags.linear[0:-1]):               # Excluding the last one as we need intervals
             self.linears.append(nn.Linear(fc_num, flags.linear[ind + 1]))
             self.bn_linears.append(nn.BatchNorm1d(flags.linear[ind + 1]))
+            #self.dropout.append(nn.Dropout(p=0.05))
 
         # Conv Layer definitions here
         self.convs = nn.ModuleList([])
@@ -74,7 +76,8 @@ class Backprop(nn.Module):
         # For the linear part
         for ind, (fc, bn) in enumerate(zip(self.linears, self.bn_linears)):
             if ind != len(self.linears) - 1:
-                out = F.leaky_relu(bn(fc(out)))                                   # ReLU + BN + Linear
+                #out = self.drop(F.leaky_relu(bn(fc(out))))                                   # dropout + ReLU + BN + Linear\
+                out = F.leaky_relu(bn(fc(out)))                                         #ReLU + BN + Linear
             else:
                 out = fc(out)
 

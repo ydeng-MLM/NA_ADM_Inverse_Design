@@ -198,7 +198,21 @@ def read_data_meta_material( x_range, y_range, geoboundary,  batch_size=128,
         print("Using separate file from dataIn/Eval as test set")
         ftrTest, lblTest = importData(os.path.join(data_dir, 'dataIn', 'eval'), x_range, y_range)
 
-    ftrTrain, lblTrain = permutate_periodicity(ftrTrain, lblTrain)
+    #ftrTrain, lblTrain = permutate_periodicity(ftrTrain, lblTrain)
+    '''
+    #Adding extra inputs here
+    h = ftrTrain[:, 0]
+    extra = np.delete(ftrTrain, [0, 1, 10, 11, 12, 13], axis=1)
+    extra *= extra
+    extra = np.array(extra, dtype='float32')
+    ftrTrain = np.append(ftrTrain, extra, axis=1)
+
+    h = ftrTest[:, 0]
+    extra = np.delete(ftrTest, [0, 1, 10, 11, 12, 13], axis=1)
+    extra *= extra
+    extra = np.array(extra, dtype='float32')
+    ftrTest = np.append(ftrTest, extra, axis=1)
+    '''
     print('total number of training samples is {}'.format(len(ftrTrain)))
     print('total number of test samples is {}'.format(len(ftrTest)),
           'length of an input spectrum is {}'.format(len(lblTest[0])))
@@ -226,6 +240,9 @@ def read_data_meta_material( x_range, y_range, geoboundary,  batch_size=128,
 
     #Normalize the data if instructed using boundary and the current numbers are larger than 1
     if normalize_input:
+        ftrTrain = normalize_np(ftrTrain)
+        ftrTest = normalize_np(ftrTest)
+        """"
         ftrTrain[:, 0:1] = (ftrTrain[:, 0:1] - geoboundary[0]) / (geoboundary[1] - geoboundary[0])
         ftrTrain[:, 0:1] = (ftrTrain[:, 0:1] - 0.5) / 0.5
         ftrTest[:, 0:1] = (ftrTest[:, 0:1] - geoboundary[0]) / (geoboundary[1] - geoboundary[0])
@@ -242,7 +259,7 @@ def read_data_meta_material( x_range, y_range, geoboundary,  batch_size=128,
         ftrTrain[:, 10:] = (ftrTrain[:, 10:] - 0.5) / 0.5
         ftrTest[:, 10:] = (ftrTest[:, 10:] - geoboundary[6]) / (geoboundary[7] - geoboundary[6])
         ftrTest[:, 10:] = (ftrTest[:, 10:] - 0.5) / 0.5
-
+        """
     for i in range(len(ftrTrain[0, :])):
         print('For feature {}, the max is {} and min is {}'.format(i, np.max(ftrTrain[:, i]), np.min(ftrTrain[:, i])))
         print('For feature {}, the max is {} and min is {}'.format(i, np.max(ftrTest[:, i]), np.min(ftrTest[:, i])))
@@ -289,11 +306,11 @@ def normalize_np(x):
     for i in range(len(x[0])):
         x_max = np.max(x[:, i])
         x_min = np.min(x[:, i])
-        x_range = (x_max - x_min ) /2.
-        x_avg = (x_max + x_min) / 2.
-        x[:, i] = (x[:, i] - x_avg) / x_range
-        assert np.max(x[:, i]) == 1, 'your normalization is wrong'
-        assert np.min(x[:, i]) == -1, 'your normalization is wrong'
+        x_range = (x_max - x_min)
+        x[:, i] = (x[:, i] - x_min) / x_range
+        x[:, i] = (x[:, i] - 0.5) / 0.5
+        #assert np.max(x[:, i]) == np.float32(1), 'your normalization is wrong'
+        #assert np.min(x[:, i]) == np.float32(-1), 'your normalization is wrong'
     return x
 
 
@@ -501,7 +518,7 @@ def permutate_periodicity(geometry_in, spectra_in):
     (n, k) = np.shape(spectra_in)
     # Initialize the output
     spectra_out = np.zeros([4 * n, k])
-    geometry_out = np.zeros([4 * n, 14])
+    geometry_out = np.zeros([4 * n, np.shape(geometry_in)[1]])
 
     #################################################
     # start permutation of geometry (case: 1 - 0123)#

@@ -414,7 +414,7 @@ class Network(object):
             #print("print loss_srt", loss_sort)
             #print(loss_sort)
             exclude_top = 0
-            trail_nums = 1000
+            trail_nums = 16000
             good_index = loss_sort[exclude_top:trail_nums+exclude_top, 1].astype('int')                        # Get the indexs
             #print("good index", good_index)
             saved_model_str = self.saved_model.replace('/', '_') + 'inference' + str(ind)
@@ -504,7 +504,6 @@ class Network(object):
             print("robotic_arm specific initialization")
         else:
             geomtry_eval = torch.rand([self.flags.eval_batch_size, self.flags.linear[0]], requires_grad=True, device='cuda')
-        #geomtry_eval = torch.randn([self.flags.eval_batch_size, self.flags.linear[0]], requires_grad=True, device='cuda')
         return geomtry_eval
 
     def initialize_from_uniform_to_dataset_distrib(self, geometry_eval):

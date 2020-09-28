@@ -22,7 +22,7 @@ CONV_STRIDE = [2, 2, 1, 1]
 OPTIM = "Adam"
 REG_SCALE = 1e-4
 BATCH_SIZE = 1024
-EVAL_BATCH_SIZE = 16000
+EVAL_BATCH_SIZE = 10000
 EVAL_STEP = 20
 TRAIN_STEP = 300
 BACKPROP_STEP = 300
@@ -46,10 +46,7 @@ NORMALIZE_INPUT = True
 
 # Running specific
 USE_CPU_ONLY = False
-#EVAL_MODEL = "sine_wavereg2e-05trail_0_forward_swipe9"
-#EVAL_MODEL = "geo_test_30k_w_extra_h"
-EVAL_MODEL = "20200825_223756"
-#EVAL_MODEL = "robotic_armreg0.0005trail_0_backward_complexity_swipe_layer500_num6"
-#EVAL_MODEL = "ballisticsreg0.0005trail_0_complexity_swipe_layer500_num5"
-#EVAL_MODEL = "meta_materialreg2e-05trail_0_forward_swipe6"
-#EVAL_MODEL = "20200506_104444"
+
+EVAL_MODEL = "30k_extrah"
+#EVAL_MODEL = "20200905_021748"
+

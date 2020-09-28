@@ -242,7 +242,7 @@ def HeatMapBVL(plot_x_name, plot_y_name, title,  save_name='HeatMap.png', HeatMa
                     if feature_2_name == 'kernel_second':                       # If comparing different kernel convs
                         print(df['conv_kernel_size'])
                         print(type(df['conv_kernel_size']))
-                        df['kernel_second'] = eval(df['conv_kernel_size'][0])[1]
+                        df['kernel_second'] = eval(df['conv_kernel_size'][0])[2]
                         df['kernel_first'] = eval(df['conv_kernel_size'][0])[0]
                     df_list.append(df[[heat_value_name, feature_1_name, feature_2_name]])
                     HMpoint_list.append(HMpoint(float(df[heat_value_name][0]),eval(str(df[feature_1_name][0])),
@@ -309,7 +309,7 @@ def HeatMapBVL(plot_x_name, plot_y_name, title,  save_name='HeatMap.png', HeatMa
         csvname = HeatMap_dir + 'pivoted.csv'
         point_df_pivot.to_csv(csvname)
         print(point_df_pivot)
-        sns.heatmap(point_df_pivot, cmap = "YlGnBu")
+        sns.heatmap(point_df_pivot, cmap = "YlGnBu", annot=True, fmt='2f')
     plt.xlabel(plot_y_name)                 # Note that the pivot gives reversing labels
     plt.ylabel(plot_x_name)                 # Note that the pivot gives reversing labels
     plt.title(title)

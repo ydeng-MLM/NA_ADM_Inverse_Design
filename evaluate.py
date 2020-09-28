@@ -8,6 +8,7 @@ sys.path.append('../utils/')
 # Torch
 
 # Own
+import torch
 import flag_reader
 from class_wrapper import Network
 from model_maker import Backprop
@@ -45,8 +46,8 @@ def evaluate_from_model(model_dir, multi_flag=False, eval_data_all=False, save_m
     elif flags.data_set == 'robotic_arm':
         flags.test_ratio = 0.1                          # 10000 in total
     else:
-        #flags.test_ratio = 0.0051062/2
-        flags.test_ratio = 0
+        flags.test_ratio = 0.02
+        #flags.test_ratio = 0
         #flags.test_ratio = 0.0025                        # 20000 in total for Meta material
     flags.batch_size = 1                            # For backprop eval mode, batchsize is always 1
     flags.lr = 1e-2
@@ -107,21 +108,6 @@ if __name__ == '__main__':
     # Read the flag, however only the flags.eval_model is used and others are not used
     eval_flags = flag_reader.read_flag()
 
-    #print(eval_flags.eval_model)
-    # Call the evaluate function from model
-    #evaluate_all()
-    # For Meta-material !!!!!
-    #evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=True, save_Simulator_Ypred=False, MSE_Simulator=False)
-    # For non Meta-material !!!!!
-    #evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=True, save_Simulator_Ypred=True, MSE_Simulator=False)
-    #evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=False, save_Simulator_Ypred=True, MSE_Simulator=False)
-    #evaluate_from_model(eval_flags.eval_model, save_misc=False, multi_flag=True)
-    #evaluate_from_model(eval_flags.eval_model, multi_flag=True)
-    #evaluate_different_dataset(multi_flag=False, eval_data_all=False, save_Simulator_Ypred=False, MSE_Simulator=False)
-    #evaluate_from_model(eval_flags.eval_model, multi_flag=False, eval_data_all=True)
-
-    #evaluate_from_model(eval_flags.eval_model)
-    #evaluate_all(models_dir="models/")
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     
     # Eval META_MATERIAL
