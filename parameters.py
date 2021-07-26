@@ -11,7 +11,6 @@ DATA_SET = 'meta_material'
 TEST_RATIO = 0.2
 
 # Model Architectural Params for meta_material data Set
-USE_LORENTZ = False
 LINEAR = [14, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 500]
 CONV_OUT_CHANNEL = [4, 4, 4, 4]
 CONV_KERNEL_SIZE = [8, 8, 5, 5]

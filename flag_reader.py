@@ -22,7 +22,6 @@ def read_flag():
     parser.add_argument('--test-ratio', default=TEST_RATIO, type=float, help='the ratio of the test set')
 
     # Model Architectural Params
-    parser.add_argument('--use-lorentz', type=bool, default=USE_LORENTZ, help='The boolean flag that indicate whether we use lorentz oscillator')
     parser.add_argument('--linear', type=list, default=LINEAR, help='The fc layers units')
     parser.add_argument('--conv-out-channel', type=list, default=CONV_OUT_CHANNEL, help='The output channel of your 1d conv')
     parser.add_argument('--conv-kernel-size', type=list, default=CONV_KERNEL_SIZE, help='The kernel size of your 1d conv')

@@ -24,11 +24,9 @@ class Backprop(nn.Module):
         # Linear Layer and Batch_norm Layer definitions here
         self.linears = nn.ModuleList([])
         self.bn_linears = nn.ModuleList([])
-        #self.drop = nn.Dropout(p=0.05)
         for ind, fc_num in enumerate(flags.linear[0:-1]):               # Excluding the last one as we need intervals
             self.linears.append(nn.Linear(fc_num, flags.linear[ind + 1]))
             self.bn_linears.append(nn.BatchNorm1d(flags.linear[ind + 1]))
-            #self.dropout.append(nn.Dropout(p=0.05))
 
         # Conv Layer definitions here
         self.convs = nn.ModuleList([])
@@ -81,7 +79,7 @@ class Backprop(nn.Module):
             else:
                 out = fc(out)
 
-        # The normal mode to train without Lorentz
+        # The normal mode
         out = out.unsqueeze(1)                                          # Add 1 dimension to get N,L_in, H
         # For the conv part
         for ind, conv in enumerate(self.convs):
