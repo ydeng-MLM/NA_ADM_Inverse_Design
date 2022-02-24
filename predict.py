@@ -8,9 +8,9 @@ sys.path.append('../utils/')
 # Torch
 
 # Own
-from Backprop import flag_reader
-from Backprop.class_wrapper import Network
-from Backprop.model_maker import Backprop
+import flag_reader
+from class_wrapper import Network
+from model_maker import Backprop
 from utils import data_reader
 from utils.helper_functions import load_flags
 from utils.evaluation_helper import plotMSELossDistrib

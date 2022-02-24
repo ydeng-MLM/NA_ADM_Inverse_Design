@@ -36,7 +36,7 @@ Y_RANGE = [i for i in range(16, 2017)]                       # Real Meta-materia
 #Y_RANGE = [i for i in range(10 , 310 )]                         # Artificial Meta-material dataset
 FORCE_RUN = True
 MODEL_NAME = None
-DATA_DIR = 'D:/Duke/MM_MM_Project/14_parameter'                                               # All simulated simple dataset
+DATA_DIR = 'Your/DIR'                                               # All simulated simple dataset
 #DATA_DIR = '/work/sr365/'                                      # real Meta-material dataset
 #DATA_DIR = '/work/sr365/NN_based_MM_data/'                      # Artificial Meta-material dataset
 # DATA_DIR = '/home/omar/PycharmProjects/github/idlm_Pytorch-master/forward/'
@@ -46,6 +46,6 @@ NORMALIZE_INPUT = True
 # Running specific
 USE_CPU_ONLY = False
 
-EVAL_MODEL = "30k_extrah"
+EVAL_MODEL = "20220223_202117"
 #EVAL_MODEL = "20200905_021748"
 
